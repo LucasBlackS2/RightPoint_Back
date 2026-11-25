@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServic
 @SpringBootApplication(exclude = UserDetailsServiceAutoConfiguration.class)
 @OpenAPIDefinition(
         info = @Info(
-                title = "CheckPoint API",
+                title = "Right Point API",
                 version = "2.0.0",
                 description = "Gestão de estágios com ponto eletrônico por geolocalização"),
         security = @SecurityRequirement(name = "bearerAuth"))

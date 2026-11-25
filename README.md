@@ -1,4 +1,4 @@
-# CheckPoint — Back-end (Java / Spring Boot)
+# Right Point — Back-end (Java / Spring Boot)
 
 API REST de **gestão de estágios com ponto eletrônico por geolocalização**.
 O aluno registra entrada e saída pelo app, a API confere se ele está perto do
