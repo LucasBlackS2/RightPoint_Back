@@ -1,5 +1,6 @@
 package br.com.checkpoint.config;
 
+import br.com.checkpoint.domain.Matriculas;
 import br.com.checkpoint.domain.TipoUsuario;
 import br.com.checkpoint.domain.Usuario;
 import br.com.checkpoint.repository.UsuarioRepository;
@@ -43,6 +44,12 @@ public class AdminSeeder implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
+        if (!matricula.isBlank() && !Matriculas.valida(matricula)) {
+            log.warn("ADMIN_MATRICULA '{}' inválida: {}", matricula, Matriculas.MENSAGEM);
+            return;
+        }
+        // O admin criado antes da regra de matrícula numérica se chamava "admin".
+        Matriculas.migrar(usuarioRepository, "admin", matricula, TipoUsuario.ADMIN, log);
         if (usuarioRepository.existsByTipoAcesso(TipoUsuario.ADMIN)) {
             return;
         }

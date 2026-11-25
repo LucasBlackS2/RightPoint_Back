@@ -2,6 +2,7 @@ package br.com.checkpoint.config;
 
 import br.com.checkpoint.domain.Contrato;
 import br.com.checkpoint.domain.Endereco;
+import br.com.checkpoint.domain.Matriculas;
 import br.com.checkpoint.domain.TipoUsuario;
 import br.com.checkpoint.domain.Usuario;
 import br.com.checkpoint.repository.ContratoRepository;
@@ -104,6 +105,12 @@ public class UsuariosTesteSeeder implements ApplicationRunner {
         if (matricula.isEmpty() || senha == null || senha.isBlank()) {
             return null;
         }
+        if (!Matriculas.valida(matricula)) {
+            log.warn("Matrícula de teste '{}' inválida: {}", matricula, Matriculas.MENSAGEM);
+            return null;
+        }
+        // Versão anterior criava as contas de teste como "professor" e "aluno".
+        Matriculas.migrar(usuarioRepository, tipo.getValor(), matricula, tipo, log);
         var existente = usuarioRepository.findByMatricula(matricula);
         if (existente.isPresent()) {
             if (existente.get().getTipoAcesso() != tipo) {

@@ -3,6 +3,7 @@ package br.com.checkpoint.service;
 import br.com.checkpoint.domain.Contrato;
 import br.com.checkpoint.domain.Endereco;
 import br.com.checkpoint.domain.FotoPonto;
+import br.com.checkpoint.domain.Matriculas;
 import br.com.checkpoint.domain.Ponto;
 import br.com.checkpoint.domain.TipoUsuario;
 import br.com.checkpoint.domain.Usuario;
@@ -46,8 +47,8 @@ public class DemoService {
 
     private static final Logger log = LoggerFactory.getLogger(DemoService.class);
 
-    public static final String MATRICULA_ALUNO = "demo.aluno";
-    public static final String MATRICULA_PROFESSOR = "demo.professor";
+    public static final String MATRICULA_ALUNO = "90000001";
+    public static final String MATRICULA_PROFESSOR = "90000002";
 
     private static final Map<String, String> PERFIS = Map.of(
             "aluno", MATRICULA_ALUNO,
@@ -120,6 +121,9 @@ public class DemoService {
     /** Cria (uma única vez) todos os dados de demonstração e devolve o contrato de exemplo. */
     @Transactional
     public Contrato garantirDados() {
+        // Matrículas antigas das contas de demonstração (antes da regra "só números").
+        Matriculas.migrar(usuarioRepository, "demo.aluno", MATRICULA_ALUNO, TipoUsuario.ALUNO, log);
+        Matriculas.migrar(usuarioRepository, "demo.professor", MATRICULA_PROFESSOR, TipoUsuario.PROFESSOR, log);
         Usuario professor = usuarioRepository.findByMatricula(MATRICULA_PROFESSOR)
                 .orElseGet(() -> criarUsuario(MATRICULA_PROFESSOR, "Prof.ª Ana Demonstração",
                         "professor.demo@checkpoint.local", TipoUsuario.PROFESSOR, null));
