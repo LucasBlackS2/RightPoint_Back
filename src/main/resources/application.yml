@@ -55,6 +55,16 @@ checkpoint:
   google-maps-api-key: ${GOOGLE_MAPS_API_KEY:}
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:8081,http://localhost:19006}
+  # Contas de teste com senha (professor + aluno + contrato de 300 h). Vazio = não cria.
+  teste:
+    professor:
+      matricula: ${PROFESSOR_TESTE_MATRICULA:}
+      senha: ${PROFESSOR_TESTE_SENHA:}
+      nome: ${PROFESSOR_TESTE_NOME:Professor Teste}
+    aluno:
+      matricula: ${ALUNO_TESTE_MATRICULA:}
+      senha: ${ALUNO_TESTE_SENHA:}
+      nome: ${ALUNO_TESTE_NOME:Aluno Teste}
   admin:
     matricula: ${ADMIN_MATRICULA:}
     senha: ${ADMIN_SENHA:}
