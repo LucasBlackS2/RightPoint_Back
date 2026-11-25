@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <!-- Configuração compartilhada do IntelliJ: libera o acesso nativo que o Tomcat usa
+       (evita os avisos "A restricted method in java.lang.System has been called" no Java 22+). -->
+  <configuration default="false" name="CheckPoint API" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="br.com.checkpoint.CheckpointApplication" />
+    <module name="checkpoint-back" />
+    <option name="VM_PARAMETERS" value="--enable-native-access=ALL-UNNAMED" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

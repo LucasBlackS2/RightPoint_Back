@@ -38,8 +38,14 @@ A API lê o `.env` da pasta do projeto automaticamente.
 mvn spring-boot:run
 ```
 
-No IntelliJ: abra a pasta, espere o Maven baixar as dependências e rode
-`CheckpointApplication`.
+No IntelliJ: abra a pasta, espere o Maven baixar as dependências e rode a
+configuração **"CheckPoint API"** (já vem pronta na pasta `.run`).
+
+> **Avisos `A restricted method in java.lang.System has been called`?** Não são
+> erros: no Java 22+ a JVM avisa quando o Tomcat verifica uma biblioteca nativa
+> opcional. A configuração "CheckPoint API", o `mvn spring-boot:run`, o `.jar` e
+> o Docker já usam `--enable-native-access=ALL-UNNAMED`, que remove os avisos. Se
+> rodar de outro jeito, coloque essa opção em *VM options*.
 
 ### 3. Testar
 
