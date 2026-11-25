@@ -1,20 +1,14 @@
-# Use a imagem base do Python
-FROM python:3.12-slim
-
-# Define o diretório de trabalho dentro do contêiner
+# Etapa 1: compila o projeto com Maven
+FROM maven:3.9-eclipse-temurin-17 AS build
 WORKDIR /app
+COPY pom.xml .
+RUN mvn -q dependency:go-offline
+COPY src ./src
+RUN mvn -q package -DskipTests
 
-# Diz ao Python para sempre procurar módulos a partir da pasta /app
-ENV PYTHONPATH=/app
-
-# Copia o arquivo de dependências
-COPY requirements.txt .
-
-# Instala as dependências
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copia todo o resto do seu projeto para o diretório de trabalho
-COPY . .
-
-# Comando para iniciar a aplicação
-CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}"]
+# Etapa 2: imagem final só com o Java e o .jar
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+COPY --from=build /app/target/checkpoint-back-*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]

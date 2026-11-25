@@ -1,26 +1,19 @@
-# IMPORTANTE:
-# NUNCA envie este arquivo para o repositório. Contém segredos como senhas e chaves de API.
+# Segredos
 .env
 
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.egg-info/
+# Maven / Java
+target/
+*.class
+*.log
 
-# Virtual Environments
-# A pasta do ambiente virtual não deve ir para o repositório.
-venv/
-env/
-.venv/
-
-# IDE / Editor directories
-# Configurações específicas do seu editor de código.
-.vscode/
+# IDEs
 .idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
 
-# OS-generated files
-# Arquivos gerados pelo sistema operacional que não são parte do projeto.
+# Sistema operacional
 .DS_Store
 Thumbs.db

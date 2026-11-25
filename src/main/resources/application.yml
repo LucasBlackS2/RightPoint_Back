@@ -1,0 +1,62 @@
+# Lê o arquivo .env (se existir), igual ao docker-compose. O segundo caminho
+# cobre o caso de abrir no IntelliJ a pasta de cima (C:\CheckPoint-Back).
+spring:
+  config:
+    import:
+      - optional:file:.env[.properties]
+      - optional:file:CheckPoint-Back/.env[.properties]
+  application:
+    name: checkpoint-back
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:checkpoint}}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+  jpa:
+    # "update" cria/ajusta as tabelas automaticamente e mantém compatibilidade
+    # com o banco que já existia na versão em Python.
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  servlet:
+    multipart:
+      max-file-size: 6MB
+      max-request-size: 7MB
+  jackson:
+    # JSON em snake_case (id_aluno, hora_entrada...), igual à API antiga.
+    property-naming-strategy: SNAKE_CASE
+
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: never
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+checkpoint:
+  jwt:
+    secret: ${JWT_SECRET:}
+    expiration-minutes: ${ACCESS_TOKEN_EXPIRE_MINUTES:60}
+  geofence:
+    raio-metros: ${GEOFENCE_RAIO_METROS:200}
+  ponto:
+    max-horas-por-registro: ${MAX_HORAS_POR_REGISTRO:8}
+    # Provas de presença exigidas ao bater o ponto (além do GPS).
+    exigir-qrcode: ${EXIGIR_QRCODE:true}
+    exigir-selfie: ${EXIGIR_SELFIE:true}
+  # QR Code ao vivo (celular do professor): troca a cada N segundos.
+  qr-ao-vivo:
+    janela-segundos: ${QR_AO_VIVO_SEGUNDOS:30}
+  # Contas "Conhecer o app" (aluno e professor de exemplo). Desligue em produção.
+  demo:
+    habilitado: ${DEMO_HABILITADO:true}
+  fuso-horario: ${APP_TIMEZONE:America/Recife}
+  google-maps-api-key: ${GOOGLE_MAPS_API_KEY:}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:8081,http://localhost:19006}
+  admin:
+    matricula: ${ADMIN_MATRICULA:}
+    senha: ${ADMIN_SENHA:}
+    nome: ${ADMIN_NOME:Administrador}
+    email: ${ADMIN_EMAIL:admin@checkpoint.local}
